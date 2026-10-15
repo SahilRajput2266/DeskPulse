@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeskPulse — Modern Customer Support Desk & SLA Dispatcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">DeskPulse</h1>
+        <div class="brand-sub"><span class="dot"></span> Live Ticket Dispatcher</div>
+      </div>
+    </div>
+
+    <!-- Quick Metrics Bar -->
+    <div class="header-metrics">
+      <div class="metric-pill">
+        <span class="m-label">ACTIVE SLA:</span>
+        <span class="m-val text-cyan" id="metricActiveSla">100% On-Track</span>
+      </div>
+      <div class="metric-pill">
+        <span class="m-label">AVG FIRST RESPONSE:</span>
+        <span class="m-val text-emerald">4m 12s</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <button id="btnNewTicket" class="btn-action btn-primary">+ Simulate Inbound Ticket</button>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <main class="workspace">
+    <!-- Ticket Sidebar -->
+    <aside class="ticket-sidebar">
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <button class="filter-tab active" data-filter="all">All (<span id="countAll">0</span>)</button>
+        <button class="filter-tab" data-filter="Open">Open</button>
+        <button class="filter-tab" data-filter="In Progress">Active</button>
+        <button class="filter-tab" data-filter="Resolved">Resolved</button>
+      </div>
+
+      <div class="ticket-list" id="ticketList"></div>
+    </aside>
+
+    <!-- Deep Ticket Thread Inspector -->
+    <section class="thread-section" id="threadSection">
+      <div id="noSelection" class="no-selection">
+        <div class="empty-icon">💬</div>
+        <h3>Select a ticket from the sidebar</h3>
+        <p>Review customer problem statement, live SLA countdown, and reply with canned responses.</p>
+      </div>
+
+      <div id="activeThread" class="active-thread" style="display: none;">
+        <!-- Thread Header -->
+        <div class="thread-header">
+          <div class="thread-top">
+            <div>
+              <span id="thId" class="th-badge">TCK-1082</span>
+              <span id="thPriority" class="p-badge urgent">Urgent</span>
+              <span id="thStatus" class="s-badge open">Open</span>
+            </div>
+            <div class="sla-box">
+              <span class="sla-label">SLA DEADLINE:</span>
+              <span id="thSlaCountdown" class="sla-timer">27m 14s</span>
+            </div>
+          </div>
+          <h2 id="thSubject" class="th-subject">Subject Goes Here</h2>
+          <div class="th-customer-info">
+            <span class="c-avatar" id="thAvatar">E</span>
+            <div>
+              <div id="thCustomerName" class="c-name">Customer Name</div>
+              <div id="thCustomerEmail" class="c-email">email@domain.com</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat History Messages -->
+        <div class="messages-container" id="messagesContainer"></div>
+
+        <!-- Reply Console & Canned Responses -->
+        <div class="reply-console">
+          <div class="canned-bar">
+            <span class="canned-label">⚡ Canned Snippets:</span>
+            <button class="canned-chip" data-text="We are currently investigating your request in our staging sandbox and will update you shortly.">Sandbox Check</button>
+            <button class="canned-chip" data-text="Your API credentials and webhook endpoints have been successfully verified and cleared for production.">Webhook Verified</button>
+            <button class="canned-chip" data-text="Issue has been resolved and confirmed across active clusters. Please verify on your side!">Resolution Notice</button>
+          </div>
+
+          <div class="input-area">
+            <textarea id="replyInput" placeholder="Type your response to the customer... (Enter to send)"></textarea>
+            <div class="input-actions">
+              <select id="statusSelect" class="status-select">
+                <option value="Open">Keep Open</option>
+                <option value="In Progress" selected>Mark In Progress</option>
+                <option value="Resolved">Mark Resolved</option>
+              </select>
+              <button id="btnSendReply" class="btn-action btn-send">Dispatch Reply ➔</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

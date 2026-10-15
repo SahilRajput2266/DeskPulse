@@ -1,0 +1,28 @@
+{
+  "name": "deskpulse",
+  "version": "1.0.0",
+  "description": "Modern omnichannel customer support desk and live ticket dispatcher with SLA countdown timers, canned replies, and real-time chat.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "helpdesk",
+    "customer-support",
+    "ticketing-system",
+    "sla-tracker",
+    "websockets",
+    "socket-io",
+    "real-time",
+    "dashboard"
+  ],
+  "author": "Sahil Chauhan (Sahil Rajput) <sahilrajput6244@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
